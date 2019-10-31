@@ -103,7 +103,7 @@ function clockMove(arg) {
     if (curObj.position.x < startPos + throwDistance) {
         // console.log('here', startPos,  throwDistance, curObj.position.x)
         curObj.position.x += speed;
-        curObj.position.z +=4;
+        // curObj.position.z +=4;
 
         // //basically, easing function
         if (speed > 1 && curObj.position.x > startPos + throwDistance - 500) {
@@ -132,14 +132,14 @@ function throwEndCallback(targetStartPos) {
         alert('you hit the target! ', targetStartPos, curObj.position.x);
         if(curObj.position.x >= -1000 ){
             curObj.position.x -=50;
-            curObj.position.z = -135;
+            // curObj.position.z = -135;
 
             requestAnimationFrame(throwEndCallback)
         }
     } else {
         if(curObj.position.x >= -1000 ){
             curObj.position.x -=50;
-            curObj.position.z = -135;
+            // curObj.position.z = -135;
 
             requestAnimationFrame(throwEndCallback)
         }
