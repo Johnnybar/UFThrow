@@ -59,19 +59,21 @@ function init() {
 
     objects.push(object);
     // }
-    
+
     var controls = new DragControls(objects, camera, renderer.domElement);
     controls.addEventListener('dragstart', dragStartCallback);
-    controls.addEventListener('dragend', function (event) {        
-        dragendCallback (event, targetStartPos);
+    controls.addEventListener('dragend', function (event) {
+        dragendCallback(event, targetStartPos);
     });
 }
 let curObj;
 let startPos;
 let distance;
-
+let speed = 15;
 function dragStartCallback(event) {
+    speed = 10;
     curObj = event.object;
+    
     startPos = curObj.position.x;
     // startColor = event.object.material.color.getHex();
     // event.object.material.emissive.set(0x2194ce);
@@ -92,15 +94,23 @@ function dragendCallback(event, arg) {
 }
 
 
+
 function clockMove(arg) {
-    
+
     // var pos = orbitCalculation(50);
     let throwDistance = Math.floor(distance) * 50;
-    
+
     if (curObj.position.x < startPos + throwDistance) {
         // console.log('here', startPos,  throwDistance, curObj.position.x)
-        curObj.position.x += 10;
-        requestAnimationFrame(()=>clockMove(arg));
+        curObj.position.x += speed;
+        curObj.position.z +=4;
+
+        // //basically, easing function
+        if (speed > 1 && curObj.position.x > startPos + throwDistance - 500) {
+            
+            speed -= 0.1;
+        }
+        requestAnimationFrame(() => clockMove(arg));
     } else {
         throwEndCallback(arg);
     }
@@ -114,34 +124,48 @@ function clockMove(arg) {
     // curObj.position.y = (curObj.position.y  + pos.z/200) ;
     // setTimeout(clockMove, 5);
 }
+
+
 function throwEndCallback(targetStartPos) {
-    
-    if (curObj.position.x < targetStartPos + 150 && curObj.position.x > targetStartPos - 150){
+
+    if (curObj.position.x < targetStartPos + 150 && curObj.position.x > targetStartPos - 150) {
         alert('you hit the target! ', targetStartPos, curObj.position.x);
-        curObj.position.x = -1000;
-    }
-    else{
-        curObj.position.x = -1000;
+        if(curObj.position.x >= -1000 ){
+            curObj.position.x -=50;
+            curObj.position.z = -135;
+
+            requestAnimationFrame(throwEndCallback)
+        }
+    } else {
+        if(curObj.position.x >= -1000 ){
+            curObj.position.x -=50;
+            curObj.position.z = -135;
+
+            requestAnimationFrame(throwEndCallback)
+        }
+        // console.log('in bottom if ', curObj.position.x);
+
+
     }
 }
 
 
 // function move(timestamp) {
 //     curObjId = curObj.id;
-    // if (!start) start = timestamp;
-    // var progress = timestamp - start
-    // // console.log(progress);
-    // curObj.position.x += Math.min(progress / 10, 200)
-    // curObj.position.z += Math.min(progress / 10, 200)
-    // curObj.position.y -= Math.min(progress / 10, 200)
-    // if (progress < 200) {
-    //     requestAnimationFrame(move);     
-    // }
-    // else {
-    //     start = null;
-    //     if(curObj.id !== curObjId)
-    //     requestAnimationFrame(move); 
-    // }
+// if (!start) start = timestamp;
+// var progress = timestamp - start
+// // console.log(progress);
+// curObj.position.x += Math.min(progress / 10, 200)
+// curObj.position.z += Math.min(progress / 10, 200)
+// curObj.position.y -= Math.min(progress / 10, 200)
+// if (progress < 200) {
+//     requestAnimationFrame(move);     
+// }
+// else {
+//     start = null;
+//     if(curObj.id !== curObjId)
+//     requestAnimationFrame(move); 
+// }
 
 // };
 
