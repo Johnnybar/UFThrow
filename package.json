@@ -48,6 +48,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
-    "core-js": "^3.3.2"
+    "core-js": "^3.3.2",
+    "drag-controls": "^1.0.4",
+    "three": "^0.109.0"
   }
 }
